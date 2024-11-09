@@ -1,30 +1,33 @@
-import process from "node:process";
-import chalk from "chalk";
-import { remixFastify } from "@mcansh/remix-fastify";
-import { fastify } from "fastify";
-import sourceMapSupport from "source-map-support";
-import getPort, { portNumbers } from "get-port";
+import process from 'node:process'
+import chalk from 'chalk'
+import { remixFastify } from '@mcansh/remix-fastify'
+import { fastify } from 'fastify'
+import sourceMapSupport from 'source-map-support'
+import Pino from 'pino'
 
-sourceMapSupport.install();
+sourceMapSupport.install()
 
-const app = fastify();
+const app = fastify({
+  logger: {
+    level: process.env.LOG_LEVEL ?? 'info',
+    name: process.env.LOG_NAME ?? 'app'
+  }
+})
 
-await app.register(remixFastify);
+await app.register(remixFastify, {
+  getLoadContext() {
+    return {
+      log: app.log.child({ module: 'remix' }) as Pino.Logger
+    }
+  }
+})
 
-const host = process.env.HOST === "true" ? "0.0.0.0" : "127.0.0.1";
-const desiredPort = Number(process.env.PORT) || 3000;
-const portToUse = await getPort({
-  port: portNumbers(desiredPort, desiredPort + 100),
-});
+const host = process.env.HOST === 'true' ? '0.0.0.0' : '127.0.0.1'
+const port = Number(process.env.PORT ?? 3000)
 
-let address = await app.listen({ port: portToUse, host });
-
-if (portToUse !== desiredPort) {
-  console.warn(
-    chalk.yellow(
-      `⚠️  Port ${desiredPort} is not available, using ${portToUse} instead.`,
-    ),
-  );
-}
-
-console.log(chalk.green(`✅ app ready: ${address}`));
+app.listen({ port, host }, (error) => {
+  if (error) {
+    app.log.error(error)
+    process.exit(1)
+  }
+})

@@ -1,0 +1,36 @@
+div.post {
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  background-color: rgb(241, 237, 250);
+  border-radius: 10px;
+
+  div.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgb(194, 179, 228);
+
+    h2 {
+      margin: 0;
+      padding: 0;
+      font-size: 1.1em;
+      font-weight: 900;
+    }
+
+    p.date {
+      font-size: 0.8em;
+      color: rgb(90, 36, 198);
+    }
+
+
+  }
+
+
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+}

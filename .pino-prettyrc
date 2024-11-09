@@ -1,0 +1,6 @@
+{
+  "levelFirst": true,
+  "singleLine": true,
+  "colorizeObjects": true,
+  "ignore": "pid,hostname"
+}
