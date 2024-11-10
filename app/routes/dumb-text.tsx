@@ -17,11 +17,7 @@ export function links() {
 }
 
 export function loader(args: LoaderFunctionArgs) {
-  const {
-    context: { log }
-  } = args
   const text = DumbTextServer.getDumbText()
-  log.info(`Dumb text generated: ${text}`)
   return { text }
 }
 
