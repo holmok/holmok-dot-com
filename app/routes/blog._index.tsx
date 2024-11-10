@@ -1,11 +1,8 @@
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
 import Breadcrumb from '~/components/breadcrumb'
-import * as Fs from 'fs'
-import matter from 'gray-matter'
-import * as Marked from 'marked'
-import * as Path from 'path'
 import { useLoaderData } from '@remix-run/react'
 import blogStyle from '~/styles/blog.css?url'
+import PostsService from '~/apis/posts.server'
 
 export const meta: MetaFunction = () => {
   return [
@@ -18,31 +15,8 @@ export function links() {
   return [{ rel: 'stylesheet', href: blogStyle }]
 }
 
-interface Post {
-  title: string
-  date: string
-  stub: string
-}
-
 export async function loader(args: LoaderFunctionArgs) {
-  const path = './app/posts'
-  const files = Fs.readdirSync(path, { withFileTypes: true })
-    .map((file) => file.name)
-    .filter((file) => file.endsWith('.md'))
-    .reverse()
-
-  const output: Post[] = []
-  for (const file of files) {
-    const post = Fs.readFileSync(Path.join(path, file), 'utf8')
-    const { data, content } = matter(post)
-    output.push({
-      title: data.title,
-      date: data.date,
-      stub: data.stub
-    })
-  }
-
-  return { posts: output }
+  return { posts: PostsService.getAllPosts() }
 }
 
 export default function Blog() {

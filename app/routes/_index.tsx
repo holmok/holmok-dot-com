@@ -1,9 +1,6 @@
 import { type LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
-import * as Fs from 'fs'
-import matter from 'gray-matter'
-import * as Marked from 'marked'
-import * as Path from 'path'
 import { useLoaderData, useNavigate } from '@remix-run/react'
+import PostsServer from '~/apis/posts.server'
 
 interface Post {
   title: string
@@ -27,26 +24,8 @@ export function links() {
   return [{ rel: 'stylesheet', href: homeStyle }]
 }
 
-export async function loader(args: LoaderFunctionArgs) {
-  const path = './app/posts'
-  const files = Fs.readdirSync(path, { withFileTypes: true })
-    .map((file) => file.name)
-    .filter((file) => file.endsWith('.md'))
-    .reverse()
-    .slice(0, 5)
-
-  const output: Post[] = []
-  for (const file of files) {
-    const post = Fs.readFileSync(Path.join(path, file), 'utf8')
-    const { data, content } = matter(post)
-    output.push({
-      title: data.title,
-      date: data.date,
-      body: await Marked.parse(content)
-    })
-  }
-
-  return { posts: output }
+export async function loader() {
+  return { posts: PostsServer.getPosts({ start: 0, end: 4 }) }
 }
 
 export default function Index() {

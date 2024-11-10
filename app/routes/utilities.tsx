@@ -1,16 +1,7 @@
 import { type LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
-import * as Fs from 'fs'
-import matter from 'gray-matter'
-import * as Marked from 'marked'
-import * as Path from 'path'
 import { useLoaderData, useNavigate } from '@remix-run/react'
 import { MouseEvent } from 'react'
-
-interface Utility {
-  title: string
-  link: string
-  body: string
-}
+import UtilitiesServer from '~/apis/utilities.server'
 
 export const meta: MetaFunction = () => {
   return [
@@ -26,25 +17,8 @@ export function links() {
   return [{ rel: 'stylesheet', href: utilitiesStyle }]
 }
 
-export async function loader(args: LoaderFunctionArgs) {
-  const path = './app/utilities'
-  const files = Fs.readdirSync(path, { withFileTypes: true })
-    .map((file) => file.name)
-    .filter((file) => file.endsWith('.md'))
-    .slice(0, 5)
-
-  const output: Utility[] = []
-  for (const file of files) {
-    const post = Fs.readFileSync(Path.join(path, file), 'utf8')
-    const { data, content } = matter(post)
-    output.push({
-      title: data.title,
-      link: data.link,
-      body: await Marked.parse(content)
-    })
-  }
-
-  return { utilities: output }
+export async function loader() {
+  return { utilities: UtilitiesServer.getUtilities() }
 }
 
 export default function Utilities() {
