@@ -18,7 +18,7 @@ export default function JsonYamlTools() {
           { label: 'json/yaml tools' }
         ]}
       />
-      <h1>Json/Yaml Tools</h1>
+      <h1>JSON/YAML Tools</h1>
     </>
   )
 }
