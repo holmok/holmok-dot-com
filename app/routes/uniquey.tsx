@@ -65,6 +65,9 @@ export function loader(args: LoaderFunctionArgs) {
 export default function Uniquey() {
   const { lengths, alphabets, counts, strings, values } =
     useLoaderData<typeof loader>()
+
+  const lighter =
+    values.alphabet === 'food' || values.alphabet === 'animals' ? 'lighter' : ''
   return (
     <>
       <Breadcrumb
@@ -126,7 +129,9 @@ export default function Uniquey() {
         </div>
         <button type='submit'>Generate</button>
       </Form>
-      {strings.length > 0 && <pre>{strings.join('\n')}</pre>}
+      {strings.length > 0 && (
+        <pre className={lighter}>{strings.join('\n')}</pre>
+      )}
     </>
   )
 }

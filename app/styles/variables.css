@@ -8,6 +8,7 @@
   --main-lighter: rgb(210, 198, 233);
   --main-lightest: rgb(240, 235, 248);
   --main-darker: rgb(66, 22, 155);
+  --main-darkest: rgb(35, 3, 99);
   --main-dark: rgb(96, 46, 194);
 
   --alt: rgb(120, 101, 70);
@@ -31,16 +32,16 @@
   --background: var(--lightest);
   --text-color: var(--darkest);
 
-  --header-background: var(--main-darker);
+  --header-background: var(--main-darkest);
   --header-text-color: var(--lightest);
   --header-height: 60px;
 
-  --footer-background: var(--main-darker);
+  --footer-background: var(--main-darkest);
   --footer-text-color: var(--lightest);
   --footer-hover-text-color: var(--main-lighter);
   --footer-height: 60px;
 
-  --menu-background: var(--main-dark);
+  --menu-background: var(--main-darker);
   --menu-text-color: var(--lightest);
   --menu-hover-background: var(--main);
   --menu-hover-text-color: var(--lightest);

@@ -5,14 +5,18 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    background-color: var(--main-lightest);
+    background-color: var(--main-dark);
     margin-bottom: var(--gutter-small);
     padding: var(--pad-single-line);
-    color: var(--main-darker);
+    color: var(--main-lighter);
     border-radius: var(--outer-radius);
 
     .title {
       font-weight: bolder;
+
+      a {
+        color: var(--main-lightest);
+      }
     }
 
     .date {

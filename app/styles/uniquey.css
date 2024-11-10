@@ -52,14 +52,19 @@
 
 pre {
   margin-top: 10px;
-  background-color: var(--main-lightest);
+  background-color: var(--main-darkest);
   padding: var(--pad-card-content-more);
   border-radius: 10px;
-  color: var(--main-dark);
+  color: var(--main-lightest);
   font-family: 'Courier New', Courier, monospace;
   font-size: var(--font-size-big);
   font-weight: bold;
   overflow: scroll;
+}
+
+pre.lighter {
+  background-color: var(--main-lightest);
+  color: var(--main-darkest);
 }
 
 @media (width <=780px) {

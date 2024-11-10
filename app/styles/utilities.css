@@ -10,7 +10,7 @@
 
   .utility {
     .header {
-      background-color: var(--main);
+      background-color: var(--main-darker);
       border-radius: var(--top-radius);
       padding: var(--pad-single-line);
 
@@ -19,7 +19,7 @@
         font-size: var(--font-size-bigger);
 
         a {
-          color: var(--lightest);
+          color: var(--main-lightest);
         }
       }
     }
@@ -30,8 +30,14 @@
       padding: var(--pad-card-content);
 
       p {
-        margin: 0;
+        margin-bottom: 8px;
+        color: var(--main-darker);
+
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
+
     }
   }
 }
