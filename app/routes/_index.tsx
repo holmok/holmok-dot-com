@@ -1,9 +1,9 @@
 import { type LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
 import * as Fs from 'fs'
-import YamlFrontMatter from 'yaml-front-matter'
+import matter from 'gray-matter'
 import * as Marked from 'marked'
 import * as Path from 'path'
-import { useLoaderData } from '@remix-run/react'
+import { useLoaderData, useNavigate } from '@remix-run/react'
 
 interface Post {
   title: string
@@ -38,11 +38,11 @@ export async function loader(args: LoaderFunctionArgs) {
   const output: Post[] = []
   for (const file of files) {
     const post = Fs.readFileSync(Path.join(path, file), 'utf8')
-    const data = YamlFrontMatter.safeLoadFront(post)
+    const { data, content } = matter(post)
     output.push({
       title: data.title,
       date: data.date,
-      body: await Marked.parse(data.__content)
+      body: await Marked.parse(content)
     })
   }
 
@@ -51,6 +51,7 @@ export async function loader(args: LoaderFunctionArgs) {
 
 export default function Index() {
   const { posts } = useLoaderData<typeof loader>()
+  const navigate = useNavigate()
   return (
     <>
       {posts.map((post) => (
@@ -65,6 +66,17 @@ export default function Index() {
           />
         </div>
       ))}
+      <div className='post-footer'>
+        <a
+          href='/blog'
+          onClick={(e) => {
+            e.preventDefault()
+            navigate('/blog')
+          }}
+        >
+          blog archive
+        </a>
+      </div>
     </>
   )
 }

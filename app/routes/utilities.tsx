@@ -1,6 +1,6 @@
 import { type LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
 import * as Fs from 'fs'
-import YamlFrontMatter from 'yaml-front-matter'
+import matter from 'gray-matter'
 import * as Marked from 'marked'
 import * as Path from 'path'
 import { useLoaderData, useNavigate } from '@remix-run/react'
@@ -36,11 +36,11 @@ export async function loader(args: LoaderFunctionArgs) {
   const output: Utility[] = []
   for (const file of files) {
     const post = Fs.readFileSync(Path.join(path, file), 'utf8')
-    const data = YamlFrontMatter.safeLoadFront(post)
+    const { data, content } = matter(post)
     output.push({
       title: data.title,
       link: data.link,
-      body: await Marked.parse(data.__content)
+      body: await Marked.parse(content)
     })
   }
 
