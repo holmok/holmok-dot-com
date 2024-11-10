@@ -66,7 +66,7 @@ export default function Blog() {
       <Breadcrumb
         crumbs={[
           { label: 'holmok.com', href: '/' },
-          { label: 'blog', href: '/blog' },
+          { label: 'blog archive', href: '/blog' },
           { label: post.title }
         ]}
       />
@@ -93,6 +93,7 @@ export default function Blog() {
             </a>
           </span>
         )) || <span> </span>}
+
         {(prev && (
           <span>
             <a

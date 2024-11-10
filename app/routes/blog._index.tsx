@@ -5,12 +5,17 @@ import matter from 'gray-matter'
 import * as Marked from 'marked'
 import * as Path from 'path'
 import { useLoaderData } from '@remix-run/react'
+import blogStyle from '~/styles/blog.css?url'
 
 export const meta: MetaFunction = () => {
   return [
     { title: 'holmok.com - blog archive' },
     { name: 'description', content: 'The blog archive.' }
   ]
+}
+
+export function links() {
+  return [{ rel: 'stylesheet', href: blogStyle }]
 }
 
 interface Post {
@@ -45,16 +50,19 @@ export default function Blog() {
   return (
     <>
       <Breadcrumb
-        crumbs={[{ label: 'holmok.com', href: '/' }, { label: 'blog' }]}
+        crumbs={[{ label: 'holmok.com', href: '/' }, { label: 'blog archive' }]}
       />
       <h1>Blog Archive</h1>
-      <ul>
+      <div className='posts'>
         {posts.map((post) => (
-          <li key={post.title}>
-            {post.date} - <a href={`/blog/${post.stub}`}>{post.title}</a>
-          </li>
+          <div key={post.title} className='post'>
+            <span>
+              <a href={`/blog/${post.stub}`}>{post.title}</a>
+            </span>
+            <span>{post.date}</span>
+          </div>
         ))}
-      </ul>
+      </div>
     </>
   )
 }
