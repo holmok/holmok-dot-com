@@ -1,8 +1,15 @@
-import type { ActionFunctionArgs, MetaFunction } from '@remix-run/node'
-import { Form, useActionData, useLoaderData } from '@remix-run/react'
+import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
+import { Form, redirect, useLoaderData } from '@remix-run/react'
 import Breadcrumb from '~/components/breadcrumb'
 import uniqueyStyle from '~/styles/uniquey.css?url'
 import UniqueyServer from '~/apis/uniquey.server'
+import EncoderServer from '~/apis/encoder.server'
+
+interface UniqueyArgs {
+  length: number
+  alphabet: string
+  count: number
+}
 
 export const meta: MetaFunction = () => {
   return [
@@ -15,31 +22,49 @@ export function links() {
   return [{ rel: 'stylesheet', href: uniqueyStyle }]
 }
 
-export async function action(args: ActionFunctionArgs) {
+export async function action(args: LoaderFunctionArgs) {
   const { request } = args
   const form = await request.formData()
-  const { alphabet, count, length } = Object.fromEntries(form)
-  const strings = UniqueyServer.generateUniquey(
-    alphabet as string,
-    Number(length),
-    Number(count)
-  )
-  return { strings }
+  const uniqueyArgs: UniqueyArgs = {
+    length: Number(form.get('length')),
+    alphabet: String(form.get('alphabet')),
+    count: Number(form.get('count'))
+  }
+  const uuid = EncoderServer.encode(uniqueyArgs)
+  return redirect(`/uniquey?uuid=${uuid}`)
 }
 
-export function loader() {
-  return {
-    lengths: UniqueyServer.getLengths(),
-    alphabets: UniqueyServer.getAlphabetList(),
-    counts: UniqueyServer.getCounts()
+export function loader(args: LoaderFunctionArgs) {
+  const { request } = args
+  const { searchParams } = new URL(request.url)
+  const uuid = searchParams.get('uuid')
+  if (uuid) {
+    const decoded = EncoderServer.decode<UniqueyArgs>(uuid)
+    return {
+      lengths: UniqueyServer.getLengths(),
+      alphabets: UniqueyServer.getAlphabetList(),
+      counts: UniqueyServer.getCounts(),
+      strings: UniqueyServer.generateUniquey(
+        decoded.alphabet,
+        decoded.length,
+        decoded.count
+      ),
+      values: decoded
+    }
+  } else {
+    return {
+      lengths: UniqueyServer.getLengths(),
+      alphabets: UniqueyServer.getAlphabetList(),
+      counts: UniqueyServer.getCounts(),
+      strings: [],
+      values: { length: 8, alphabet: 'alphanumeric', count: 10 } as UniqueyArgs
+    }
   }
 }
 
 export default function Uniquey() {
-  const { lengths, alphabets, counts } = useLoaderData<typeof loader>()
-  const action: { strings: string[] } | undefined =
-    useActionData<typeof action>()
-  const strings = action?.strings
+  const { lengths, alphabets, counts, strings, values } =
+    useLoaderData<typeof loader>()
   return (
     <>
       <Breadcrumb
@@ -56,13 +81,16 @@ export default function Uniquey() {
         check out on{' '}
         <a href='https://www.npmjs.com/package/uniquey'>npmjs.com</a>.
       </p>
-
-      <Form method='post' className='options'>
+      <Form className='options' method='post'>
         <div className='option'>
           <label htmlFor='length'>Length:</label>
-          <select name='length'>
+          <select name='length' aria-label='length'>
             {lengths.map((length) => (
-              <option key={length} value={length}>
+              <option
+                key={length}
+                value={length}
+                selected={values.length === length}
+              >
                 {length}
               </option>
             ))}
@@ -70,9 +98,13 @@ export default function Uniquey() {
         </div>
         <div className='option'>
           <label htmlFor='alphabet'>Alphabet:</label>
-          <select name='alphabet'>
+          <select name='alphabet' aria-label='alphabet'>
             {alphabets.map((alphabet) => (
-              <option key={alphabet} value={alphabet}>
+              <option
+                key={alphabet}
+                value={alphabet}
+                selected={values.alphabet === alphabet}
+              >
                 {alphabet}
               </option>
             ))}
@@ -80,18 +112,21 @@ export default function Uniquey() {
         </div>
         <div className='option'>
           <label htmlFor='count'>Count:</label>
-          <select name='count'>
+          <select name='count' aria-label='count'>
             {counts.map((count) => (
-              <option key={count} value={count}>
+              <option
+                key={count}
+                value={count}
+                selected={values.count === count}
+              >
                 {count}
               </option>
             ))}
           </select>
         </div>
-
         <button type='submit'>Generate</button>
       </Form>
-      {strings && <pre>{strings.join('\n')}</pre>}
+      {strings.length > 0 && <pre>{strings.join('\n')}</pre>}
     </>
   )
 }
