@@ -41,21 +41,23 @@ export default function Utilities() {
         I make a bunch of silly tools I like to keep online. There are some that
         are useful, some that are dumb, some that are just fun.
       </p>
-      {utilities.map((utility) => (
-        <div className='post'>
-          <div className='header'>
-            <h2>
-              <a href={utility.link} onClick={handleUtilityClick}>
-                {utility.title}
-              </a>
-            </h2>
+      <div className='utility-list'>
+        {utilities.map((utility) => (
+          <div className='utility'>
+            <div className='header'>
+              <h2>
+                <a href={utility.link} onClick={handleUtilityClick}>
+                  {utility.title}
+                </a>
+              </h2>
+            </div>
+            <div
+              className='body'
+              dangerouslySetInnerHTML={{ __html: utility.body }}
+            />
           </div>
-          <div
-            className='body'
-            dangerouslySetInnerHTML={{ __html: utility.body }}
-          />
-        </div>
-      ))}
+        ))}
+      </div>
     </>
   )
 }

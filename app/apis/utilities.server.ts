@@ -1,6 +1,6 @@
 import * as Fs from 'fs'
 import matter from 'gray-matter'
-import * as Marked from 'marked'
+import { marked } from 'marked'
 import * as Path from 'path'
 
 interface Utility {
@@ -21,7 +21,7 @@ for (const file of files) {
   output.push({
     title: data.title,
     link: data.link,
-    body: await Marked.parse(content)
+    body: marked.parse(content) as string
   })
 }
 

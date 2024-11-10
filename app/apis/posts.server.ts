@@ -1,6 +1,6 @@
 import * as Fs from 'fs'
 import matter from 'gray-matter'
-import * as Marked from 'marked'
+import { marked } from 'marked'
 import * as Path from 'path'
 
 interface Post {
@@ -24,7 +24,7 @@ for (const file of files) {
   const post: Post = {
     title: data.title,
     date: data.date,
-    body: await Marked.parse(content),
+    body: marked.parse(content) as string,
     stub: data.stub
   }
   output.push(post)
