@@ -1,6 +1,7 @@
 import { type LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
 import { useLoaderData, useNavigate } from '@remix-run/react'
 import PostsServer from '~/apis/posts.server'
+import blogStyle from '~/styles/blog.css?url'
 
 interface Post {
   title: string
@@ -18,10 +19,8 @@ export const meta: MetaFunction = () => {
   ]
 }
 
-import homeStyle from '~/styles/home.css?url'
-
 export function links() {
-  return [{ rel: 'stylesheet', href: homeStyle }]
+  return [{ rel: 'stylesheet', href: blogStyle }]
 }
 
 export async function loader() {

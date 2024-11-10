@@ -4,11 +4,13 @@ import { Outlet, useNavigate } from '@remix-run/react'
 import PageLayout, { PageLayoutProps } from './components/page-layout'
 
 import resetStyle from '~/styles/reset.css?url'
+import variablesStyle from '~/styles/variables.css?url'
 import rootStyle from '~/styles/root.css?url'
 
 export function links() {
   return [
     { rel: 'stylesheet', href: resetStyle },
+    { rel: 'stylesheet', href: variablesStyle },
     { rel: 'stylesheet', href: rootStyle }
   ]
 }

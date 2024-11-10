@@ -1,15 +1,89 @@
-div.posts {
-  margin-top: 10px;
+.posts {
+  margin-top: var(--gutter-small);
 
-  div.post {
+  .post-link {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    background-color: rgb(241, 237, 250);
-    margin-bottom: 10px;
-    padding: 4px 12px 5px;
-    font-size: 0.9em;
-    color: rgb(54, 11, 140);
-    border-radius: 10px;
+    background-color: var(--main-lightest);
+    margin-bottom: var(--gutter-small);
+    padding: var(--pad-single-line);
+    color: var(--main-darker);
+    border-radius: var(--outer-radius);
+
+    .title {
+      font-weight: bolder;
+    }
+
+    .date {
+      font-style: italic;
+      font-weight: lighter;
+    }
+  }
+}
+
+.post {
+  margin-bottom: var(--gutter-small);
+  padding: var(--pad-card);
+  background-color: var(--main-lightest);
+  border-radius: var(--outer-radius);
+
+  div.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--gutter-small);
+    padding-bottom: var(--gutter-tiny);
+    border-bottom: var(--main-lighter-border);
+
+    h2 {
+      margin: 0;
+      padding: 0;
+      font-size: var(--font-size-big);
+      font-weight: bolder;
+    }
+
+    p.date {
+      font-size: var(--font-size-small);
+      color: var(--main-darker);
+    }
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.post-footer {
+  background-color: var(--main-lightest);
+  padding: var(--pad-single-line);
+  font-size: var(--font-size-small);
+  color: var(--main-darker);
+  border-radius: var(--outer-radius);
+  display: flex;
+  justify-content: center;
+
+  a {
+    color: var(--main-darker);
+    text-decoration: underline;
+    font-weight: 900;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--gutter-small);
+  background-color: var(--main-lightest);
+  padding: var(--pad-single-line);
+  font-size: var(--font-size-small);
+  color: var(--main-darker);
+  border-radius: var(--outer-radius);
+
+  a {
+    color: var(--main-darker);
+    text-decoration: underline;
+    font-weight: bolder;
   }
 }

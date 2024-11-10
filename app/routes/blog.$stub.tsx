@@ -3,10 +3,10 @@ import Breadcrumb from '~/components/breadcrumb'
 import { useLoaderData, useNavigate, useParams } from '@remix-run/react'
 import PostsServer from '~/apis/posts.server'
 
-import homeStyle from '~/styles/home.css?url'
+import blogStyle from '~/styles/blog.css?url'
 
 export function links() {
-  return [{ rel: 'stylesheet', href: homeStyle }]
+  return [{ rel: 'stylesheet', href: blogStyle }]
 }
 
 export const meta: MetaFunction = () => {

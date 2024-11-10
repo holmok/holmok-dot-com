@@ -29,11 +29,11 @@ export default function Blog() {
       <h1>Blog Archive</h1>
       <div className='posts'>
         {posts.map((post) => (
-          <div key={post.title} className='post'>
-            <span>
+          <div key={post.title} className='post-link'>
+            <span className='title'>
               <a href={`/blog/${post.stub}`}>{post.title}</a>
             </span>
-            <span>{post.date}</span>
+            <span className='date'>{post.date}</span>
           </div>
         ))}
       </div>

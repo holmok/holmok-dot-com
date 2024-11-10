@@ -3,39 +3,34 @@
   flex-direction: column;
   justify-content: center;
   align-content: stretch;
-  gap: 10px;
+  gap: var(--gutter-small);
   margin: 0;
   padding: 0;
   list-style: none;
 
   .utility {
-
-
-    .body {
-      background-color: rgb(210, 198, 233);
-      border-radius: 0 0 10px 10px;
-      padding: 8px 15px;
-      font-size: 95%;
-
-      p {
-        margin: 0;
-      }
-    }
-
-
     .header {
-      background-color: rgb(81, 45, 152);
-      border-radius: 10px 10px 0 0;
-
-      padding: 3px 15px;
+      background-color: var(--main);
+      border-radius: var(--top-radius);
+      padding: var(--pad-single-line);
 
       h2 {
         margin: 0;
-        font-size: 1.2rem;
+        font-size: var(--font-size-bigger);
 
         a {
-          color: rgb(240, 238, 244);
+          color: var(--lightest);
         }
+      }
+    }
+
+    .body {
+      background-color: var(--main-lighter);
+      border-radius: var(--bottom-radius);
+      padding: var(--pad-card-content);
+
+      p {
+        margin: 0;
       }
     }
   }

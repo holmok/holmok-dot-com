@@ -1,33 +1,3 @@
-:root {
-  --font-family: 'Arial', sans-serif;
-  --background: #fff;
-  --text-color: rgb(32, 0, 97);
-
-  --header-background: #309;
-  --header-text-color: #fff;
-  --header-height: 60px;
-
-  --menu-background: #309;
-  --menu-text-color: #fff;
-  --menu-hover-background: #63C;
-  --menu-hover-text-color: #fff;
-
-  --menu-toggle-size: 200%;
-
-  --footer-background: #309;
-  --footer-text-color: #fff;
-  --footer-height: 60px;
-
-  --link: rgb(96, 46, 194);
-
-  --gutter: 20px;
-
-  --gutter-small: 10px;
-  --gutter-tiny: 5px;
-
-  --main-width: 780px;
-}
-
 html {
   font-family: var(--font-family);
   background-color: var(--background);
@@ -65,13 +35,11 @@ header {
   display: flex;
   justify-content: center;
   padding: 0 var(--gutter);
-  box-shadow: inset 0 -20px 40px 0 rgba(0, 0, 0, 0.33);
 
   .title {
-    font-size: 150%;
-    font-weight: bold;
+    font-size: var(--font-size-biggest);
+    font-weight: bolder;
     color: var(--header-text-color);
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, .8);
   }
 
   .wrapper {
@@ -88,9 +56,8 @@ header {
         top: -3px;
         padding: 0;
         color: var(--header-text-color);
-        font-weight: 900;
+        font-weight: bolder;
         font-size: var(--menu-toggle-size);
-        text-shadow: 2px 2px 2px rgba(0, 0, 0, .8);
       }
 
       ul.menu {
@@ -104,25 +71,22 @@ header {
         li {
           display: block;
 
-
           a {
+            color: var(--menu-text-color);
+            font-weight: bold;
+            text-decoration: none;
+            padding: var(--pad-card);
+            display: block;
+            text-align: center;
 
             &:hover {
               background-color: var(--menu-hover-background);
               color: var(--menu-hover-text-color);
             }
-
-            color: var(--menu-text-color);
-            font-weight: bold;
-            text-decoration: none;
-            padding: var(--gutter-tiny) var(--gutter);
-            display: block;
-            text-align: center;
           }
         }
       }
     }
-
   }
 }
 
@@ -138,7 +102,6 @@ footer {
   display: flex;
   justify-content: center;
   padding: 0 var(--gutter);
-  box-shadow: inset 0 20px 40px 0 rgba(0, 0, 0, 0.33);
 
   .wrapper {
     width: var(--main-width);
@@ -149,21 +112,38 @@ footer {
 
     .copy {
       color: var(--footer-text-color);
-      text-shadow: 1px 1px 1px rgba(0, 0, 0, .8);
+
     }
 
     a {
       color: var(--footer-text-color);
       text-decoration: none;
-      text-shadow: 1px 1px 1px rgba(0, 0, 0, .8);
 
       &:hover {
-        color: yellow;
-
+        color: var(--footer-hover-text-color);
       }
     }
 
 
+  }
+}
+
+.breadcrumb {
+  background-color: var(--main-lightest);
+  margin-bottom: var(--gutter-small);
+  padding: var(--pad-single-line);
+  font-size: var(--font-size-small);
+  color: var(--main-darker);
+  border-radius: var(--outer-radius);
+
+  a {
+    color: var(--main-darker);
+    text-decoration: underline;
+  }
+
+  span.current {
+    color: var(--main-darkest);
+    font-weight: bolder;
   }
 }
 
@@ -183,29 +163,8 @@ footer {
     li {
       a {
         padding: var(--gutter-tiny) var(--gutter-small);
-        font-size: 120%;
+        font-size: var(--font-size-bigger);
       }
     }
   }
-}
-
-
-div.breadcrumb {
-  a {
-    color: rgb(96, 46, 194);
-    text-decoration: underline;
-  }
-
-  span.current {
-    color: rgb(96, 46, 194);
-
-    font-weight: 900;
-  }
-
-  background-color: rgb(241, 237, 250);
-  margin-bottom: 10px;
-  padding: 2px 12px 3px;
-  font-size: 0.9em;
-  color: rgb(54, 11, 140);
-  border-radius: 10px;
 }

@@ -1,30 +1,29 @@
 .options {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: rgb(241, 237, 250);
+  gap: var(--gutter-small);
+  padding: var(--gutter-small);
+  border-radius: var(--outer-radius);
+  background-color: var(--main-lightest);
 
-  div.option {
+  .option {
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    min-width: 100px;
-    height: 35px;
+    min-width: var(--control-min-width);
     flex: 1;
 
     select {
-      border: 1px solid rgb(180, 151, 236);
-      color: rgb(122, 69, 227);
-      border-radius: 5px;
-      padding: 0 10px;
+      border: var(--main-border);
+      color: var(--main);
+      border-radius: var(--inner-radius);
+      padding: var(--control-select-padding);
       outline: none;
       width: 100%;
-      height: 35px;
+      height: var(--control-height);
       appearance: none;
-      background: white;
+      background: var(--lightest);
       background-size: 16px;
       background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAAYCAMAAACGPf6pAAAADFBMVEUAAAD///91Wcn///+tzMFdAAAABHRSTlP///8AQCqp9AAAAAlwSFlzAAAWJQAAFiUBSVIk8AAAAGRJREFUOI2tz8EOADAEA1D8/0fvskQmazUzV+rhYbAct0iKVeCVBLOAXZayQH2aev4NLObYRLusbrCt1akuNTqyrm+xoXYAPZZazgqp6ZGJKNhc24yEfdDMZezUXE2VI9XU628L1vgATpMkIsMAAAAASUVORK5CYII=');
       background-position: right center;
@@ -34,91 +33,52 @@
     label {
       display: inline-block;
       margin-right: 4px;
-      color: rgb(122, 69, 227);
-      font-size: 90%;
-      font-weight: 900;
+      color: var(--main);
+      font-size: var(--font-size-small);
+      font-weight: bolder;
     }
   }
 
   button {
-    background-color: rgb(96, 46, 194);
-    color: white;
+    background-color: var(--main-dark);
+    color: var(--lightest);
     border: none;
-    border-radius: 5px;
-    padding: 5px 15px;
+    border-radius: var(--inner-radius);
+    padding: var(--control-button-padding);
     cursor: pointer;
   }
 }
 
-@media (width <=640px) {
-  form.options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    max-width: calc(100vw - 40px);
-    background-color: rgb(241, 237, 250);
 
-    div.option {
-      display: flex;
+pre {
+  margin-top: 10px;
+  background-color: var(--main-lightest);
+  padding: var(--pad-card-content-more);
+  border-radius: 10px;
+  color: var(--main-dark);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: var(--font-size-big);
+  font-weight: bold;
+  overflow: scroll;
+}
+
+@media (width <=780px) {
+  .options {
+    flex-direction: column;
+    max-width: calc(100vw - var(--gutter) * 2);
+
+    .option {
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
 
-      select {
-        border: 1px solid rgb(180, 151, 236);
-        color: rgb(122, 69, 227);
-        border-radius: 5px;
-        padding: 0 10px;
-        outline: none;
-        width: 100%;
-        height: 35px;
-        background: white;
-        appearance: none;
-        background-size: 16px;
-        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAAYCAMAAACGPf6pAAAADFBMVEUAAAD///91Wcn///+tzMFdAAAABHRSTlP///8AQCqp9AAAAAlwSFlzAAAWJQAAFiUBSVIk8AAAAGRJREFUOI2tz8EOADAEA1D8/0fvskQmazUzV+rhYbAct0iKVeCVBLOAXZayQH2aev4NLObYRLusbrCt1akuNTqyrm+xoXYAPZZazgqp6ZGJKNhc24yEfdDMZezUXE2VI9XU628L1vgATpMkIsMAAAAASUVORK5CYII=');
-        background-position: right center;
-        background-repeat: no-repeat;
-      }
-
       label {
-        color: rgb(122, 69, 227);
         font-size: 90%;
-        font-weight: 900;
       }
-    }
-
-    button {
-      background-color: rgb(96, 46, 194);
-      color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 5px 15px;
-      cursor: pointer;
     }
   }
 
   pre {
-    margin-top: 10px;
-    background-color: rgb(241, 237, 250);
-    padding: 5px 10px;
-    border-radius: 10px;
-    color: rgb(122, 69, 227);
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 900;
-    overflow: scroll;
-    max-width: calc(100vw - 40px);
+    max-width: calc(100vw - var(--gutter) * 2);
   }
-}
-
-pre {
-  margin-top: 10px;
-  background-color: rgb(241, 237, 250);
-  padding: 5px 10px;
-  border-radius: 10px;
-  color: rgb(122, 69, 227);
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: 900;
-  overflow: scroll;
 }
