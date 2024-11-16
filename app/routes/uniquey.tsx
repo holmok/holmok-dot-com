@@ -30,16 +30,16 @@ export async function action(args: LoaderFunctionArgs) {
     alphabet: String(form.get('alphabet')),
     count: Number(form.get('count'))
   }
-  const uuid = EncoderServer.encode(uniqueyArgs)
-  return redirect(`/uniquey?uuid=${uuid}`)
+  const settings = EncoderServer.encode(uniqueyArgs)
+  return redirect(`/uniquey?settings=${settings}`)
 }
 
 export function loader(args: LoaderFunctionArgs) {
   const { request } = args
   const { searchParams } = new URL(request.url)
-  const uuid = searchParams.get('uuid')
-  if (uuid) {
-    const decoded = EncoderServer.decode<UniqueyArgs>(uuid)
+  const settings = searchParams.get('settings')
+  if (settings) {
+    const decoded = EncoderServer.decode<UniqueyArgs>(settings)
     return {
       lengths: UniqueyServer.getLengths(),
       alphabets: UniqueyServer.getAlphabetList(),

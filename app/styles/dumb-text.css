@@ -10,13 +10,21 @@
     gap: var(--gutter-small);
   }
 
-  button {
-    background-color: var(--main-dark);
-    color: var(--lightest);
-    border: none;
-    border-radius: var(--inner-radius);
-    padding: var(--control-button-padding);
-    cursor: pointer;
+  form {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--gutter-small);
+    width: 100%;
+
+    input[type="submit"] {
+      background-color: var(--main-dark);
+      color: var(--lightest);
+      border: none;
+      border-radius: var(--inner-radius);
+      padding: var(--control-button-padding);
+      cursor: pointer;
+      width: 100%;
+    }
   }
 
 }
@@ -49,6 +57,11 @@
   .dt-header {
     flex-direction: column;
     max-width: calc(100vw - var(--gutter) * 2);
+
+    form {
+      flex-direction: column;
+      max-width: calc(100vw - var(--gutter) * 2);
+    }
   }
 
   pre {

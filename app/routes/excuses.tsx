@@ -3,9 +3,7 @@ import Breadcrumb from '~/components/breadcrumb'
 import ExcuseServer from '~/apis/excuses.server'
 import { useLoaderData, useNavigate } from '@remix-run/react'
 import excusesStyle from '~/styles/excuses.css?url'
-import { s } from 'node_modules/vite/dist/node/types.d-aGj9QkWt'
 import { Fragment, useEffect, useState } from 'react'
-import { use } from 'sentencer'
 
 export const meta: MetaFunction = () => {
   return [

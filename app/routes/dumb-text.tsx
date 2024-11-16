@@ -1,9 +1,9 @@
-import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node'
+import type { MetaFunction } from '@remix-run/node'
 import Breadcrumb from '~/components/breadcrumb'
 import DumbTextServer from '~/apis/dumb-text.server'
-import { useLoaderData, useSearchParams } from '@remix-run/react'
+import { Form, useActionData, useLoaderData } from '@remix-run/react'
 import dumbTextStyle from '~/styles/dumb-text.css?url'
-import { MouseEvent, useState } from 'react'
+import { FormEvent, Fragment, MouseEvent, useState } from 'react'
 
 export const meta: MetaFunction = () => {
   return [
@@ -16,28 +16,31 @@ export function links() {
   return [{ rel: 'stylesheet', href: dumbTextStyle }]
 }
 
-export function loader(args: LoaderFunctionArgs) {
+export async function action() {
+  const text = DumbTextServer.getDumbText()
+  return { text }
+}
+
+export function loader() {
   const text = DumbTextServer.getDumbText()
   return { text }
 }
 
 export default function DumbText() {
-  const { text } = useLoaderData<typeof loader>()
+  const loaderData = useLoaderData<typeof loader>()
+  const actionData = useActionData<typeof action>()
 
-  const [searchParams, setSearchParams] = useSearchParams()
+  const { text } = loaderData || actionData || { text: '' }
 
-  const textType = searchParams.get('type') ?? 'text'
+  const [renderType, setRenderType] = useState<string>('text')
+  const [renderKey, setRenderKey] = useState<string>(Date.now().toString())
 
-  function generateText(event: MouseEvent<HTMLButtonElement>): void {
-    event.preventDefault()
-    const type = event.currentTarget.value
-    const params = new URLSearchParams()
-    params.set('type', type)
-    setSearchParams(params)
+  function generateText(event: FormEvent<HTMLFormElement>): void {
+    setRenderKey(Date.now().toString())
   }
 
   return (
-    <>
+    <Fragment key={renderKey}>
       <Breadcrumb
         crumbs={[
           { label: 'holmok.com', href: '/' },
@@ -47,21 +50,30 @@ export default function DumbText() {
       />
       <div className='dt-header'>
         <h1>Dumb Text Generator</h1>
-
         <span>
-          <button value='text' onClick={generateText}>
-            Generate Text
-          </button>
-          <button value='html' onClick={generateText}>
-            Generate HTML
-          </button>
+          <Form method='post' onSubmit={generateText}>
+            <input
+              type='submit'
+              value='Generate Text'
+              onClick={() => {
+                setRenderType('text')
+              }}
+            />
+            <input
+              type='submit'
+              value='Generate HTML'
+              onClick={() => {
+                setRenderType('html')
+              }}
+            />
+          </Form>
         </span>
       </div>
-      {textType === 'text' ? (
+      {renderType === 'text' ? (
         <div className='dumb-text' dangerouslySetInnerHTML={{ __html: text }} />
       ) : (
         <pre className='dumb-html'>{text}</pre>
       )}
-    </>
+    </Fragment>
   )
 }
