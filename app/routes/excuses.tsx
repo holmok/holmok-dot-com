@@ -18,10 +18,7 @@ export function links() {
 }
 
 export async function loader(args: LoaderFunctionArgs) {
-  const {
-    request,
-    context: { log }
-  } = args
+  const { request } = args
   const { phrase, cookie } = await ExcuseServer.getExcuse(request)
   const scrambled: string[] = [phrase]
   const positions = shuffle([...phrase.matchAll(rxLetters)].map((m) => m.index))
