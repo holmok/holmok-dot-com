@@ -4,7 +4,8 @@ import ExcuseServer from '~/apis/excuses.server'
 import { useLoaderData, useNavigate } from '@remix-run/react'
 import excusesStyle from '~/styles/excuses.css?url'
 import { s } from 'node_modules/vite/dist/node/types.d-aGj9QkWt'
-import { useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
+import { use } from 'sentencer'
 
 export const meta: MetaFunction = () => {
   return [
@@ -41,24 +42,28 @@ export async function loader(args: LoaderFunctionArgs) {
 const letters = 'QWERTYUIOPLKJHGFDSAZXCVBNMzaqwsxcderfvbgtyhnmjuiklop'
 const rxLetters = /[a-zA-Z]/g
 
+function Excuse(props: { scrambled: string[] }) {
+  const { scrambled } = props
+  const [index, setIndex] = useState(scrambled.length - 1)
+  const [excuse, setExcuse] = useState(scrambled[0])
+  if (index >= 0) {
+    setTimeout(() => {
+      setExcuse(scrambled[index])
+      setIndex(index - 1)
+    }, 30)
+  }
+  return <div className='excuse'>{excuse}</div>
+}
+
 export default function RandomExcuseGenerator() {
   const { scrambled } = useLoaderData<typeof loader>() as {
     scrambled: string[]
   }
 
-  if (typeof window !== 'undefined') {
-    const excuse = document.querySelector('.excuse')
-    if (excuse != null) {
-      const interval = setInterval(() => {
-        const next = scrambled.pop()
-        if (next) {
-          excuse.textContent = next
-        } else {
-          clearInterval(interval)
-        }
-      }, 30)
-    }
-  }
+  const [clientOnly, setClientOnly] = useState(false)
+  useEffect(() => {
+    setClientOnly(true)
+  }, [])
 
   const navigate = useNavigate()
   return (
@@ -75,17 +80,21 @@ export default function RandomExcuseGenerator() {
         <button
           type='submit'
           onClick={(e) => {
-            e.preventDefault()
-            navigate('.')
+            navigate('/excuses', { replace: true })
           }}
         >
           Generate
         </button>
       </div>
-      <div className='excuse'></div>
+      {clientOnly && (
+        <Fragment key={scrambled[0]}>
+          <Excuse scrambled={scrambled} />{' '}
+        </Fragment>
+      )}
     </>
   )
 }
+
 function shuffle(positions: number[]): number[] {
   const output: number[] = []
   while (positions.length > 0) {
