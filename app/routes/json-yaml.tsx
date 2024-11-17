@@ -30,10 +30,7 @@ export function links() {
 }
 
 export async function action(args: ActionFunctionArgs) {
-  const {
-    request,
-    context: { log }
-  } = args
+  const { request } = args
   const body = await request.formData()
   const action = actions[(body.get('action') as string) ?? ''] ?? null
   const output: {
