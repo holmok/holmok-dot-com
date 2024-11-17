@@ -2,4 +2,4 @@
 
 Christopher Holmok's personal web site.
 
-Remix and Fastify on Heroku.
+Remix and Fastify.
