@@ -1,5 +1,4 @@
 import process from 'node:process'
-import chalk from 'chalk'
 import { remixFastify } from '@mcansh/remix-fastify'
 import { fastify } from 'fastify'
 import sourceMapSupport from 'source-map-support'
